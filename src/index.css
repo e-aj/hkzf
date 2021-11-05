@@ -10,6 +10,6 @@ html,body {
   touch-action: pan-y;
   touch-action: pan-x;
 }
-h2 {
+h2,p{
   margin: 0;
 }
