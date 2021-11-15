@@ -1,0 +1,27 @@
+.map{
+    padding-top: 45px;
+    height: 100%;
+}
+.container {
+    height: 100%;
+}
+.map :global(.am-navbar) {
+    margin-top: -45px;
+}
+.bubble {
+    width: 70px;
+    height: 70px;
+    line-height: 1;
+    display: inline-block;
+    position: absolute;
+    border-radius: 100%;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    text-align: center;
+    cursor: pointer;
+    background-color: seagreen;
+}
+
+.name {
+    padding: 18px 0 6px 0;
+}

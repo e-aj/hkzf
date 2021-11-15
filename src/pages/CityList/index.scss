@@ -2,14 +2,7 @@
     // 顶部导航栏
     height: 100%;
     padding-top: 45px;
-    .navbar {
-        margin-top: -45px;
-        color: #333;
-        background-color: #f6f5f6;
-        .am-navbar-title{
-            color: #333;
-        }
-    }
+    
     .city{
         .title{
             color: #999;
@@ -55,4 +48,7 @@
             line-height: 15px;
         }
     }
+}
+.am-navbar {
+    margin-top: -45px;
 }
