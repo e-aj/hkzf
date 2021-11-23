@@ -21,6 +21,17 @@
     cursor: pointer;
     background-color: seagreen;
 }
+.rect{
+    width: 120px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    background-color: seagreen;
+    line-height: 30px;
+}
 
 .name {
     padding: 18px 0 6px 0;
