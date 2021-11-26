@@ -4,7 +4,7 @@ import styles from './index.module.css'
 
 // 导入封装好的NavHeader组件
 import NavHeader from '../../components/NavHeader';
-
+import { Link } from 'react-router-dom';
 
 // 解决脚手架中全局变量访问的问题
 const BMapGL = window.BMapGL
@@ -22,6 +22,11 @@ const labelStyle = {
 
 
 export default class Map extends React.Component {
+    state = {
+        // 小区下的房源列表
+        housesList: [],
+        isShowList:false
+    }
     componentDidMount() {
         this.initMap()
     }
@@ -186,9 +191,15 @@ export default class Map extends React.Component {
     }
 
     // 获取小区房源数据
-    async getHousesList(id){
-       const res = await axios.get(`http://localhost:8080/houses?cityId=${id}`)
-       console.log(res)
+    async getHousesList(id) {
+        const res = await axios.get(`http://localhost:8080/houses?cityId=${id}`)
+        console.log(res)
+        this.setState({
+            housesList: res.data.body.list,
+            isShowList:true
+
+        })
+        console.log(this.state.housesList)
 
     }
 
@@ -200,9 +211,51 @@ export default class Map extends React.Component {
                     地图找房
                 </NavHeader>
                 {/* 地图容器 */}
-                <div id="container" className={styles.container}></div>
+                <div id="container" className={styles.container}>
 
-                <div className={styles.houseList}></div>
+                </div>
+                {/* 房源列表 */}
+                <div className={[styles.houseList, this.state.isShowList ? styles.show:''].join(' ')}>
+                    <div className={styles.titleWrap}>
+                        <h1 className={styles.listTitle}>房屋列表</h1>
+                        <a className={styles.titleMore} href="/house/list">
+                            更多房源
+                        </a>
+                    </div>
+                    <div className={styles.houseItems}>
+                        {this.state.housesList.map(item =>
+                            <div className={styles.house} key={item.houseCode}>
+                                <div className={styles.imgWrap}>
+                                    <img
+                                        className={styles.img}
+                                        src={`http://localhost:8080${item.houseImg}`}
+                                        alt=""
+                                    />
+                                </div>
+                                <div className={styles.content}>
+                                    <h3 className={styles.title}>
+                                        {item.title}
+                                    </h3>
+                                    <div className={styles.desc}>{item.desc}</div>
+                                    <div>
+                                        {
+                                            item.tags.map(tag =>
+                                                <span className={[styles.tag, styles.tag1].join(' ')} key={tag}>
+                                                    {tag}
+                                                </span>)
+                                        }
+                                    </div>
+                                    <div className={styles.price}>
+                                        <span className={styles.priceNum}>{item.price}</span> 元/月
+                                    </div>
+                                </div>
+                            </div>)
+
+
+                        }
+
+                    </div>
+                </div>
             </div>
         )
     }
