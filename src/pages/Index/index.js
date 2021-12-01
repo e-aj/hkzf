@@ -1,13 +1,17 @@
 import React from "react";
 import { Carousel, Flex, Grid, WingBlank } from 'antd-mobile';
-import axios from "axios";
+// import axios from "axios";
 import Nav1 from '../../assets/images/nav-1.png'
 import Nav2 from '../../assets/images/nav-2.png'
 import Nav3 from '../../assets/images/nav-3.png'
 import Nav4 from '../../assets/images/nav-4.png'
 import './index.scss'
 
-
+// 导入BASE_URL
+import { BASE_URL } from '../../utils/url'
+//
+// 导入axios实例
+import {API} from '../../utils/api'
 
 import { getCurrentCity} from '../../utils'
 
@@ -58,7 +62,7 @@ export default class Index extends React.Component {
 
     //获取轮播图数据的方法
     async getSwipers() {
-        const res = await axios.get('http://localhost:8080/home/swiper')
+        const res = await API.get('/home/swiper')
         this.setState({
             swipers: res.data.body,
             isSwiperLoaded: true
@@ -67,7 +71,7 @@ export default class Index extends React.Component {
 
     //获取租房小组的数据的方法
     async getGroups() {
-        const res = await axios.get('http://localhost:8080/home/groups', {
+        const res = await API.get('/home/groups', {
             params: {
                 area: 'AREA%7C88cff55c-aaa4-e2e0'
             }
@@ -79,7 +83,7 @@ export default class Index extends React.Component {
     }
     // 获取最新咨询
     async getNews() {
-        const res = await axios.get('http://localhost:8080/home/news', {
+        const res = await API.get('/home/news', {
             params: {
                 area: 'AREA|88cff55c-aaa4-e2e0'
             }
@@ -124,7 +128,7 @@ export default class Index extends React.Component {
                 style={{ display: 'inline-block', width: '100%', height: 212 }}
             >
                 <img
-                    src={`http://localhost:8080${item.imgSrc}`}
+                    src={`${BASE_URL}${item.imgSrc}`}
                     alt=""
                     style={{ width: '100%', verticalAlign: 'top' }}
                     onLoad={() => {
@@ -153,7 +157,7 @@ export default class Index extends React.Component {
         return this.state.news.map(item => (
             <div className="news-item" key={item.id}>
                 <div className="imgwrap">
-                    <img className="img" src={`http://localhost:8080${item.imgSrc}`} />
+                    <img className="img" src={`${BASE_URL}${item.imgSrc}`} />
                 </div>
 
                 <Flex className="content" direction="colum" justify="between">
@@ -219,7 +223,7 @@ export default class Index extends React.Component {
                                 <p className="info">{item.desc}</p>
                             </div>
                             <img
-                                src={`http://localhost:8080${item.imgSrc}`}
+                                src={`${BASE_URL}${item.imgSrc}`}
                                 alt=""
                             />
                         </Flex>

@@ -1,10 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import styles from './index.module.css'
+import { Toast } from 'antd-mobile'
+
+// 导入BASE_URL
+import { BASE_URL } from '../../utils/url'
+// 
+import {API} from '../../utils/api'
 
 // 导入封装好的NavHeader组件
 import NavHeader from '../../components/NavHeader';
-import { Link } from 'react-router-dom';
 
 // 解决脚手架中全局变量访问的问题
 const BMapGL = window.BMapGL
@@ -25,7 +30,7 @@ export default class Map extends React.Component {
     state = {
         // 小区下的房源列表
         housesList: [],
-        isShowList:false
+        isShowList: false
     }
     componentDidMount() {
         this.initMap()
@@ -61,21 +66,41 @@ export default class Map extends React.Component {
                 alert('您选择的地址没有解析到结果！');
             }
         }, label)
+
+        // 给地图绑定移动事件
+        map.addEventListener('movestart', () => {
+            if (this.state.isShowList) {
+                this.setState({
+                    isShowList: false
+                })
+            }
+
+        })
     }
 
 
 
 
     async renderOverlays(id) {
-        const res = await axios.get(`http://localhost:8080/area/map?id=${id}`)
-        const data = res.data.body
+        try {
+            // 开启loading
+            Toast.loading('加载中...', 0, null, false)
+            const res = await API.get(`/area/map?id=${id}`)
+            // 关闭loading
+            Toast.hide()
+            const data = res.data.body
 
-        // 调用getTypeAndZoom
-        const { nextZoom, type } = this.getTypeAndZoom()
-        data.forEach(item => {
-            // 创建覆盖物
-            this.creatOverlays(item, nextZoom, type)
-        })
+            // 调用getTypeAndZoom
+            const { nextZoom, type } = this.getTypeAndZoom()
+            data.forEach(item => {
+                // 创建覆盖物
+                this.creatOverlays(item, nextZoom, type)
+            })
+        } catch (e) {
+            // 关闭loading
+            Toast.hide()
+        }
+
     }
 
     // 计算要绘制的覆盖物类型和下一个缩放级别
@@ -184,22 +209,74 @@ export default class Map extends React.Component {
         label.setStyle(labelStyle)
 
 
-        label.addEventListener('click', () => {
+        label.addEventListener('click', (e) => {
             this.getHousesList(id)
+            console.log(e)
+            // 获取当前被点击项
+            // const target = e.changedTouches[0]
+            // console.log(target)
         })
         this.map.addOverlay(label);                        // 将标注添加到地图中
     }
 
     // 获取小区房源数据
     async getHousesList(id) {
-        const res = await axios.get(`http://localhost:8080/houses?cityId=${id}`)
-        console.log(res)
-        this.setState({
-            housesList: res.data.body.list,
-            isShowList:true
+        try {
+            // 开启loading
+            Toast.loading('加载中...', 0, null, false)
+            const res = await API.get(`houses?cityId=${id}`)
+            // 关闭loading
+            Toast.hide()
+            this.setState({
+                housesList: res.data.body.list,
+                isShowList: true
 
-        })
-        console.log(this.state.housesList)
+            })
+
+        } catch (e) {
+            // 关闭loading
+            Toast.hide()
+        }
+
+
+    }
+
+    // 封装渲染房屋列表的方法
+    renderHousesList() {
+        return this.state.housesList.map(item =>
+            <div className={styles.house} key={item.houseCode}>
+                <div className={styles.imgWrap}>
+                    <img
+                        className={styles.img}
+                        src={`${BASE_URL}${item.houseImg}`}
+                        alt=""
+                    />
+                </div>
+                <div className={styles.content}>
+                    <h3 className={styles.title}>
+                        {item.title}
+                    </h3>
+                    <div className={styles.desc}>{item.desc}</div>
+                    <div>
+                        {
+                            item.tags.map((tag, index) => {
+                                const tagClass = 'tag' + (index + 1)
+                                return (
+                                    <span className={[styles.tag, styles[tagClass]].join(' ')} key={tag}>
+                                        {tag}
+                                    </span>
+                                )
+                            }
+
+                            )
+                        }
+                    </div>
+                    <div className={styles.price}>
+                        <span className={styles.priceNum}>{item.price}</span> 元/月
+                    </div>
+                </div>
+            </div>)
+
 
     }
 
@@ -215,7 +292,7 @@ export default class Map extends React.Component {
 
                 </div>
                 {/* 房源列表 */}
-                <div className={[styles.houseList, this.state.isShowList ? styles.show:''].join(' ')}>
+                <div className={[styles.houseList, this.state.isShowList ? styles.show : ''].join(' ')}>
                     <div className={styles.titleWrap}>
                         <h1 className={styles.listTitle}>房屋列表</h1>
                         <a className={styles.titleMore} href="/house/list">
@@ -223,36 +300,7 @@ export default class Map extends React.Component {
                         </a>
                     </div>
                     <div className={styles.houseItems}>
-                        {this.state.housesList.map(item =>
-                            <div className={styles.house} key={item.houseCode}>
-                                <div className={styles.imgWrap}>
-                                    <img
-                                        className={styles.img}
-                                        src={`http://localhost:8080${item.houseImg}`}
-                                        alt=""
-                                    />
-                                </div>
-                                <div className={styles.content}>
-                                    <h3 className={styles.title}>
-                                        {item.title}
-                                    </h3>
-                                    <div className={styles.desc}>{item.desc}</div>
-                                    <div>
-                                        {
-                                            item.tags.map(tag =>
-                                                <span className={[styles.tag, styles.tag1].join(' ')} key={tag}>
-                                                    {tag}
-                                                </span>)
-                                        }
-                                    </div>
-                                    <div className={styles.price}>
-                                        <span className={styles.priceNum}>{item.price}</span> 元/月
-                                    </div>
-                                </div>
-                            </div>)
-
-
-                        }
+                        {this.renderHousesList()}
 
                     </div>
                 </div>
