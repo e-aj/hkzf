@@ -110,7 +110,6 @@ export default class Index extends React.Component {
         //     })
         // })
         const curCity = await getCurrentCity()
-        console.log(curCity)
         this.setState({
             curCityName : curCity.label
         })

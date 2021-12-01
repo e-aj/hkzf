@@ -2,13 +2,16 @@ import React from "react";
 //导入路由
 import {  Route} from 'react-router-dom'
 
+import { TabBar } from 'antd-mobile';
+
+import './index.css'
 //导入News组件
 import Index from "../Index";
 import List from "../List";
 import News from "../News";
 import profile from "../Profile";
-import { TabBar } from 'antd-mobile';
-import './index.css'
+
+
 
 //Tabar 数据
 const tabItems = [
@@ -41,7 +44,6 @@ export default class Home extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps,this.props)
     if (prevProps.location.pathname !== this.props.location.pathname) {
       //此时路由发生切换
       this.setState({
