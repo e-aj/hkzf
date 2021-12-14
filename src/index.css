@@ -11,7 +11,7 @@ html,body {
   touch-action: pan-y;
   touch-action: pan-x;
 }
-h1,h2,p,ul{
+h1,h2,p,ul,dd{
   margin: 0;
 }
 ul {

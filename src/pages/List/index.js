@@ -6,6 +6,7 @@ import { Flex } from 'antd-mobile'
 
 // 导入搜索栏组件
 import SearchHeader from '../../components/SearchHeader'
+import Filter from './components/Filter'
 
 // 导入样式
 import styles from './index.module.css'
@@ -23,7 +24,12 @@ export default class HouseList extends React.Component {
                     <SearchHeader cityName={label} className={styles.searchHeader}/>
                 </Flex>
 
+                {/* 条件筛选 */}
+                <Filter />
+
             </div>
+
+            
         )
     }
 }

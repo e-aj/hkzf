@@ -121,14 +121,16 @@
     overflow-y: auto;
     height: 100%;
     padding-bottom: 45px;
+    
   }
   .house {
-    height: 120px;
+    height: 135px;
     position: relative;
     box-sizing: border-box;
     justify-content: space-around;
     padding-top: 18px;
     border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 20px;
   }
   
   .imgWrap {
