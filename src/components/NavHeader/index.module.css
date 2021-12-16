@@ -1,8 +1,8 @@
-.navbar {
+.navBar {
     color: #333;
     background-color: #f6f5f6;
-    
 }
-.navbar :global(.am-navbar-title){
+
+.navBar :global(.am-navbar-title) {
     color: #333;
 }

@@ -36,7 +36,6 @@ class Filter extends Component {
 
     componentDidMount() {
         this.bodyEl = document.body
-
         this.getFiltersData()
     }
 
@@ -154,7 +153,8 @@ class Filter extends Component {
         // 更多筛选条件 more
         filters.more = more.join(',')
 
-        // this.props.onFilter(filters)
+        this.props.onFilter(filters)
+        // console.log(filters)
 
         this.setState({
             openType: "",
@@ -247,12 +247,12 @@ class Filter extends Component {
             <div className={styles.root}>
                 {/* 遮罩层 */}
                 
-                {
+                {/* {
                     // 遮罩层
-                    (type === 'area' || openType === 'mode' || openType === 'price')
+                    (openType === 'area' || openType === 'mode' || openType === 'price')
                         ? <div className={styles.mask} onClick={this.onCancel} />
                         : null
-                }
+                } */}
 
                 <div className={styles.content}>
                     <FilterTitle titleSelectedStatus={titleSelectedStatus} onClick={this.onTitleClick} />

@@ -1,33 +1,32 @@
-import React from 'react'
-import { NavBar } from 'antd-mobile'
-// import "./index.scss"
-import styles from "./index.module.css"
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { NavBar } from 'antd-mobile';
+import PropTypes from 'prop-types';
 
-// 导入withRouter高阶组件
-import { withRouter } from 'react-router-dom'
+import styles from './index.module.css';
 
-// 导入prop校验的包
-import PropTypes from 'prop-types'
-
- function NavHeader({ children, history,onLeftClick}) {
-    // 默认点击行为
-    const defaultHandler = () => history.go(-1)
+function NavHeader(props) {
+    const defaultHandler = () => props.history.go(-1);
 
     return (
         <NavBar
-            className={styles.navbar}
+            className={[styles.navBar, props.className || ''].join(' ')}
             mode="light"
             icon={<i className="iconfont icon-back" />}
-            onLeftClick={onLeftClick || defaultHandler}
-        >{children}</NavBar>
+            onLeftClick={props.onLeftClick || defaultHandler}
+            rightContent={props.rightContent}
+            >
+            {props.children}
+        </NavBar>
     )
 }
 
-// 添加props校验
+// 校验
 NavHeader.propTypes = {
     children: PropTypes.string.isRequired,
-    onLeftClick: PropTypes.func
-
+    onLeftClick: PropTypes.func,
+    className: PropTypes.string,
+    rightContent: PropTypes.array
 }
 
 export default withRouter(NavHeader)
