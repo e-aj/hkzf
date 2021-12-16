@@ -9,6 +9,9 @@ import Map from './pages/Map';
 
 import HouseDetail from './pages/HouseDetail';
 
+import Login from './pages/Login'
+import Registe from './pages/Registe'
+
 function App() {
   return (
     <Router>
@@ -22,9 +25,13 @@ function App() {
       <Route path="/home" component={Home}></Route>
       <Route path="/citylist" component={CityList}></Route>
       <Route path="/map" component={Map}></Route>
+      <Route path="/login" component={Login}></Route>
+      <Route path="/registe" component={Registe}></Route>
 
       {/* 房源详情的路由规则： */}
       <Route path='/detail/:id' component={HouseDetail}></Route>
+
+      
     </div>
 
     </Router>
