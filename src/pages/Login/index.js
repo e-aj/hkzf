@@ -47,7 +47,7 @@ class Login extends Component {
                         <Flex.Item>
                             <Link to="/registe">还没有账号，去注册~</Link>
                         </Flex.Item>
-                    </Flex>
+                    </Flex> 
                 </WingBlank>
             </div>
         )
@@ -72,8 +72,6 @@ Login = withFormik({
             username,
             password
         })
-        console.log(username,password)
-        console.log(res)
 
         const { status, body, description } = res.data
         
