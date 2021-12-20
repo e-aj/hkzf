@@ -12,6 +12,8 @@ import HouseDetail from './pages/HouseDetail';
 import Login from './pages/Login'
 import Registe from './pages/Registe'
 
+import AuthRoute from './components/AuthRoute'
+
 function App() {
   return (
     <Router>
@@ -24,7 +26,7 @@ function App() {
       {/* 配置路由 */}
       <Route path="/home" component={Home}></Route>
       <Route path="/citylist" component={CityList}></Route>
-      <Route path="/map" component={Map}></Route>
+      <AuthRoute path="/map" component={Map} />
       <Route path="/login" component={Login}></Route>
       <Route path="/registe" component={Registe}></Route>
 

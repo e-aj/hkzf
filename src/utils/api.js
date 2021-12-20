@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken ,removeToken} from './auth'
+import { getToken, removeToken } from './auth'
 import { BASE_URL } from './url'
 
 // 创建axios实例
@@ -8,25 +8,24 @@ const API = axios.create({
 })
 
 // 添加请求拦截器
-API.interceptors.request.use(config =>{
+API.interceptors.request.use(config => {
    // console.log(config,config.url)
-   const {url} = config
-   if(url.startsWith('/user') && !url.startsWith('/user/login') && !url.startsWith('/user/registered')) {
+   const { url } = config
+   if (url.startsWith('/user') && !url.startsWith('/user/login') && !url.startsWith('/user/registered')) {
       // 添加请求头
       config.headers.Authorization = getToken()
-      
+
 
    }
    return config
 })
 
 // 添加响应拦截器
-API.interceptors.response.use(response=>{
+API.interceptors.response.use(response => {
    console.log(response)
-   const {status} = response.data
+   const { status } = response.data 
    if (status === 400) {
       removeToken()
-
    }
 
    return response
@@ -35,4 +34,4 @@ API.interceptors.response.use(response=>{
 
 
 
-export {API}
+export { API }

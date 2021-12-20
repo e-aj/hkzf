@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { isAuth } from '../../utils'
+import { isAuth } from '../../utils/auth'
 
 const AuthRoute = ({component: Component, ...rest}) => {
     return (

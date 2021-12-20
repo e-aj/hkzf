@@ -27,7 +27,7 @@ const recommendHouses = [
         id: 2,
         src: BASE_URL + '/img/message/2.png',
         desc: '83㎡/南/高楼层',
-        title: '天居园 2室1厅',
+        title: '天居园 2室1厅', 
         price: 7200,
         tags: ['近地铁']
     },

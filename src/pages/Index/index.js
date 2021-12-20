@@ -159,7 +159,7 @@ export default class Index extends React.Component {
         return this.state.news.map(item => (
             <div className="news-item" key={item.id}>
                 <div className="imgwrap">
-                    <img className="img" src={`${BASE_URL}${item.imgSrc}`} />
+                    <img className="img" src={`${BASE_URL}${item.imgSrc}`} alt="" />
                 </div>
 
                 <Flex className="content" direction="colum" justify="between">
